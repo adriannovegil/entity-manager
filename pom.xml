@@ -18,7 +18,6 @@
     
     <modules>
         <module>overall-parent</module>
-        <module>broker-parent</module>
         <module>commons</module>
         <module>core</module>
     </modules>
