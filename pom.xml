@@ -21,40 +21,38 @@
         <module>broker-parent</module>
         <module>commons</module>
         <module>core</module>
-        <module>registry</module>
-        <module>history</module>
     </modules>
     
     <profiles>
-        <profile>
+<!--        <profile>
             <id>docker-dist</id>
             <modules>
                 <module>SpringCloudParent</module>
                 <module>SpringCloudModules</module>
             </modules>
-        </profile>
-        <profile>
+        </profile>-->
+<!--        <profile>
             <id>dist</id>
             <modules>
                 <module>SpringCloudParent</module>
                 <module>SpringCloudModules</module>
             </modules>
-        </profile>
-        <profile>
+        </profile>-->
+<!--        <profile>
             <id>aaio</id>
             <modules>
                 <module>AllInOneRunner</module>
                 <module>SpringCloudParent</module>
                 <module>SpringCloudModules</module>
             </modules>
-        </profile>
-        <profile>
+        </profile>-->
+<!--        <profile>
             <id>aaio-no-eureka</id>
             <modules>
                 <module>AllInOneRunner</module>
             </modules>
-        </profile>
-        <profile>
+        </profile>-->
+<!--        <profile>
             <id>docker-aaio</id>
             <modules>
                 <module>AllInOneRunner</module>
@@ -98,8 +96,8 @@
                     </plugin>
                 </plugins>
             </build>
-        </profile>
-        <profile>
+        </profile>-->
+<!--        <profile>
             <id>docker-aaio-no-eureka</id>
             <modules>
                 <module>AllInOneRunner</module>
@@ -132,6 +130,6 @@
                     </plugin>
                 </plugins>
             </build>
-        </profile>
+        </profile>-->
     </profiles>
 </project>
