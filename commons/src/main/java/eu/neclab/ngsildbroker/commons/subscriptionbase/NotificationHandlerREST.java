@@ -17,9 +17,9 @@ import eu.neclab.ngsildbroker.commons.datatypes.Notification;
 import eu.neclab.ngsildbroker.commons.datatypes.requests.SubscriptionRequest;
 
 class NotificationHandlerREST extends BaseNotificationHandler {
-	// Comment about webclient ...
-	// it just doesn't work for us at the moment maybe we are doing something wrong
-	// but for now its the restTemplate
+    // Comment about webclient ...
+    // it just doesn't work for us at the moment maybe we are doing something wrong
+    // but for now its the restTemplate
 //	private WebClient webClient;
 //	webClient.post().uri(request.getSubscription().getNotification().getEndPoint().getUri())
 //	.headers(httpHeadersOnWebClientBeingBuilt -> {
@@ -53,75 +53,75 @@ class NotificationHandlerREST extends BaseNotificationHandler {
 //		return Mono.empty();
 //	}).subscribe();
 
-	private RestTemplate restTemplate;
+    private RestTemplate restTemplate;
 
-	@Value("${scorpio.subscription.maxretries:5}")
-	int maxRetries;
+    @Value("${scorpio.subscription.maxretries:5}")
+    int maxRetries;
 
-	NotificationHandlerREST(SubscriptionInfoDAOInterface baseSubscriptionInfoDAO, RestTemplate restTemplate) {
-		super(baseSubscriptionInfoDAO);
-		this.restTemplate = restTemplate;
-	}
+    NotificationHandlerREST(SubscriptionInfoDAOInterface baseSubscriptionInfoDAO, RestTemplate restTemplate) {
+        super(baseSubscriptionInfoDAO);
+        this.restTemplate = restTemplate;
+    }
 
-	@Override
-	protected void sendReply(Notification notification, SubscriptionRequest request) throws Exception {
-		ResponseEntity<String> compacted;
-		compacted = notification.toCompactedJson();
-		Request req = Request.Post(request.getSubscription().getNotification().getEndPoint().getUri());
+    @Override
+    protected void sendReply(Notification notification, SubscriptionRequest request) throws Exception {
+        ResponseEntity<String> compacted;
+        compacted = notification.toCompactedJson();
+        Request req = Request.Post(request.getSubscription().getNotification().getEndPoint().getUri());
 
-		for (Entry<String, List<String>> entry : compacted.getHeaders().entrySet()) {
-			for (String value : entry.getValue()) {
-				req = req.addHeader(entry.getKey(), value);
-			}
-		}
-		if (request.getSubscription().getNotification().getEndPoint().getReceiverInfo() != null) {
-			for (Entry<String, String> entry : request.getSubscription().getNotification().getEndPoint()
-					.getReceiverInfo().entries()) {
-				req = req.addHeader(entry.getKey(), entry.getValue().toString());
-			}
-		}
-		req = req.bodyByteArray(compacted.getBody().getBytes());
-		int retryCount = maxRetries;
-		boolean success = false;
-		ThreadLocalRandom random = ThreadLocalRandom.current();
-		while (true) {
-			try {
-				HttpResponse response = req.execute().returnResponse();
-				HttpStatus returnStatus = HttpStatus.valueOf(response.getStatusLine().getStatusCode());
-				if (returnStatus.is2xxSuccessful()) {
-					logger.info("success subscription id: " + request.getSubscription().getId() + " notification id: "
-							+ notification.getId());
-					success = true;
-					break;
-				} else if (returnStatus.is3xxRedirection()) {
-					logger.info("redirect");
-					success = true;
-					break;
-				} else {
+        for (Entry<String, List<String>> entry : compacted.getHeaders().entrySet()) {
+            for (String value : entry.getValue()) {
+                req = req.addHeader(entry.getKey(), value);
+            }
+        }
+        if (request.getSubscription().getNotification().getEndPoint().getReceiverInfo() != null) {
+            for (Entry<String, String> entry : request.getSubscription().getNotification().getEndPoint()
+                    .getReceiverInfo().entries()) {
+                req = req.addHeader(entry.getKey(), entry.getValue().toString());
+            }
+        }
+        req = req.bodyByteArray(compacted.getBody().getBytes());
+        int retryCount = maxRetries;
+        boolean success = false;
+        ThreadLocalRandom random = ThreadLocalRandom.current();
+        while (true) {
+            try {
+                HttpResponse response = req.execute().returnResponse();
+                HttpStatus returnStatus = HttpStatus.valueOf(response.getStatusLine().getStatusCode());
+                if (returnStatus.is2xxSuccessful()) {
+                    logger.info("success subscription id: " + request.getSubscription().getId() + " notification id: "
+                            + notification.getId());
+                    success = true;
+                    break;
+                } else if (returnStatus.is3xxRedirection()) {
+                    logger.info("redirect");
+                    success = true;
+                    break;
+                } else {
 
-					if (retryCount == 0) {
-						logger.error("finally failed to send notification subscription id: "
-								+ request.getSubscription().getId() + " notification id: " + notification.getId());
-						break;
-					}
-					int waitTime = random.nextInt(500, 5000);
-					logger.error("failed to send notification subscription id: " + request.getSubscription().getId()
-							+ " notification id: " + notification.getId() + ". "
-							+ response.getStatusLine().getStatusCode() + " "
-							+ response.getStatusLine().getReasonPhrase() + " " + response.getEntity().toString());
-					logger.error("retrying " + retryCount + " times waiting " + waitTime + " ms");
-					Thread.sleep(waitTime);
-					retryCount--;
-				}
-			} catch (ConnectException exception) {
-				// TODO: handle exception
-			}
+                    if (retryCount == 0) {
+                        logger.error("finally failed to send notification subscription id: "
+                                + request.getSubscription().getId() + " notification id: " + notification.getId());
+                        break;
+                    }
+                    int waitTime = random.nextInt(500, 5000);
+                    logger.error("failed to send notification subscription id: " + request.getSubscription().getId()
+                            + " notification id: " + notification.getId() + ". "
+                            + response.getStatusLine().getStatusCode() + " "
+                            + response.getStatusLine().getReasonPhrase() + " " + response.getEntity().toString());
+                    logger.error("retrying " + retryCount + " times waiting " + waitTime + " ms");
+                    Thread.sleep(waitTime);
+                    retryCount--;
+                }
+            } catch (ConnectException exception) {
+                // TODO: handle exception
+            }
 
-		}
+        }
 
-		if (!success) {
-			request.getSubscription().getNotification().setLastFailedNotification(new Date(System.currentTimeMillis()));
-		}
-	}
+        if (!success) {
+            request.getSubscription().getNotification().setLastFailedNotification(new Date(System.currentTimeMillis()));
+        }
+    }
 
 }

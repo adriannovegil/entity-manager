@@ -11,20 +11,20 @@ import eu.neclab.ngsildbroker.queryhandler.repository.QueryDAO;
 @Service
 public class QueryService extends BaseQueryService {
 
-	@Autowired
-	QueryDAO queryDAO;
+    @Autowired
+    QueryDAO queryDAO;
 
-	@Autowired
-	CSourceDAO cSourceDAO;
+    @Autowired
+    CSourceDAO cSourceDAO;
 
-	@Override
-	protected StorageDAO getQueryDAO() {
-		return queryDAO;
-	}
+    @Override
+    protected StorageDAO getQueryDAO() {
+        return queryDAO;
+    }
 
-	@Override
-	protected StorageDAO getCsourceDAO() {
-		return cSourceDAO;
-	}
+    @Override
+    protected StorageDAO getCsourceDAO() {
+        return cSourceDAO;
+    }
 
 }

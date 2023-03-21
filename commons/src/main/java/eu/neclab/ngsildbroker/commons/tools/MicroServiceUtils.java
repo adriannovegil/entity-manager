@@ -12,33 +12,34 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MicroServiceUtils {
-	private final static Logger logger = LogManager.getLogger(MicroServiceUtils.class);
 
-	@Value("${scorpio.gatewayurl}")
-	private String gatewayUrl;
+    private final static Logger logger = LogManager.getLogger(MicroServiceUtils.class);
 
-	@Value("${server.port}")
-	private int port;
+    @Value("${scorpio.gatewayurl}")
+    private String gatewayUrl;
 
-	public URI getGatewayURL() {
-		logger.trace("getGatewayURL() :: started");
-		String url = null;
-		try {
-			if (gatewayUrl == null || gatewayUrl.strip().isEmpty()) {
-				String hostIP = InetAddress.getLocalHost().getHostName();
-				url = new StringBuilder("http://").append(hostIP).append(":").append(port).toString();
-			} else {
-				url = gatewayUrl;
-			}
-			logger.trace("getGatewayURL() :: completed");
+    @Value("${server.port}")
+    private int port;
 
-			return new URI(url.toString());
-		} catch (URISyntaxException | UnknownHostException e) {
-			throw new AssertionError(
-					"something went really wrong here when creating a URL... this should never happen but did with "
-							+ url,
-					e);
-		}
-	}
+    public URI getGatewayURL() {
+        logger.trace("getGatewayURL() :: started");
+        String url = null;
+        try {
+            if (gatewayUrl == null || gatewayUrl.strip().isEmpty()) {
+                String hostIP = InetAddress.getLocalHost().getHostName();
+                url = new StringBuilder("http://").append(hostIP).append(":").append(port).toString();
+            } else {
+                url = gatewayUrl;
+            }
+            logger.trace("getGatewayURL() :: completed");
+
+            return new URI(url.toString());
+        } catch (URISyntaxException | UnknownHostException e) {
+            throw new AssertionError(
+                    "something went really wrong here when creating a URL... this should never happen but did with "
+                    + url,
+                    e);
+        }
+    }
 
 }

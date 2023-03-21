@@ -9,16 +9,16 @@ import eu.neclab.ngsildbroker.commons.exceptions.ResponseException;
 
 public class DeleteCSourceRequest extends CSourceRequest {
 
-	/**
-	 * constructor for serialization
-	 */
-	public DeleteCSourceRequest() {
-	}
+    /**
+     * constructor for serialization
+     */
+    public DeleteCSourceRequest() {
+    }
 
-	public DeleteCSourceRequest(Map<String, Object> registration, ArrayListMultimap<String, String> headers,
-			String registrationId) throws ResponseException {
-		super(headers, registrationId, registration, AppConstants.DELETE_REQUEST);
-		setFinalPayload(registration);
-	}
+    public DeleteCSourceRequest(Map<String, Object> registration, ArrayListMultimap<String, String> headers,
+            String registrationId) throws ResponseException {
+        super(headers, registrationId, registration, AppConstants.DELETE_REQUEST);
+        setFinalPayload(registration);
+    }
 
 }

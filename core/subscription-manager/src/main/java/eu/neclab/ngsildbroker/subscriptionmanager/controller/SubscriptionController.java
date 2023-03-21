@@ -28,53 +28,53 @@ import eu.neclab.ngsildbroker.subscriptionmanager.service.SubscriptionService;
 @RequestMapping("/ngsi-ld/v1/subscriptions")
 public class SubscriptionController {
 
-	private final static Logger logger = LoggerFactory.getLogger(SubscriptionController.class);
+    private final static Logger logger = LoggerFactory.getLogger(SubscriptionController.class);
 
-	@Autowired
-	SubscriptionService manager;
+    @Autowired
+    SubscriptionService manager;
 
-	@Value("${ngsild.corecontext:https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld}")
-	String coreContext;
+    @Value("${ngsild.corecontext:https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld}")
+    String coreContext;
 
-	@Value("${scorpio.subscription.default-limit:50}")
-	private int defaultLimit;
-	@Value("${scorpio.subscription.max-limit:1000}")
-	private int maxLimit;
+    @Value("${scorpio.subscription.default-limit:50}")
+    private int defaultLimit;
+    @Value("${scorpio.subscription.max-limit:1000}")
+    private int maxLimit;
 
-	@PostConstruct
-	public void init() {
-		JsonLdProcessor.init(coreContext);
-	}
+    @PostConstruct
+    public void init() {
+        JsonLdProcessor.init(coreContext);
+    }
 
-	@PostMapping
-	public ResponseEntity<String> subscribeRest(HttpServletRequest request, @RequestBody String payload) {
-		return SubscriptionControllerFunctions.subscribeRest(manager, request, payload, AppConstants.SUBSCRIPTIONS_URL,
-				logger);
-	}
+    @PostMapping
+    public ResponseEntity<String> subscribeRest(HttpServletRequest request, @RequestBody String payload) {
+        return SubscriptionControllerFunctions.subscribeRest(manager, request, payload, AppConstants.SUBSCRIPTIONS_URL,
+                logger);
+    }
 
-	@GetMapping
-	public ResponseEntity<String> getAllSubscriptions(HttpServletRequest request) {
-		return SubscriptionControllerFunctions.getAllSubscriptions(manager, request, defaultLimit, maxLimit, logger);
-	}
+    @GetMapping
+    public ResponseEntity<String> getAllSubscriptions(HttpServletRequest request) {
+        return SubscriptionControllerFunctions.getAllSubscriptions(manager, request, defaultLimit, maxLimit, logger);
+    }
 
-	@GetMapping("/{id}")
-	public ResponseEntity<String> getSubscriptionById(HttpServletRequest request,
-			@PathVariable(name = "id", required = true) String id,
-			@RequestParam(required = false, name = "limit", defaultValue = "0") int limit) {
-		return SubscriptionControllerFunctions.getSubscriptionById(manager, request, id, limit, logger);
+    @GetMapping("/{id}")
+    public ResponseEntity<String> getSubscriptionById(HttpServletRequest request,
+            @PathVariable(name = "id", required = true) String id,
+            @RequestParam(required = false, name = "limit", defaultValue = "0") int limit) {
+        return SubscriptionControllerFunctions.getSubscriptionById(manager, request, id, limit, logger);
 
-	}
+    }
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteSubscription(HttpServletRequest request,
-			@PathVariable(name = "id", required = true) String id) {
-		return SubscriptionControllerFunctions.deleteSubscription(manager, request, id, logger);
-	}
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteSubscription(HttpServletRequest request,
+            @PathVariable(name = "id", required = true) String id) {
+        return SubscriptionControllerFunctions.deleteSubscription(manager, request, id, logger);
+    }
 
-	@PatchMapping("/{id}")
-	public ResponseEntity<String> updateSubscription(HttpServletRequest request,
-			@PathVariable(name = "id", required = true) String id, @RequestBody String payload) {
-		return SubscriptionControllerFunctions.updateSubscription(manager, request, id, payload, logger);
-	}
+    @PatchMapping("/{id}")
+    public ResponseEntity<String> updateSubscription(HttpServletRequest request,
+            @PathVariable(name = "id", required = true) String id, @RequestBody String payload) {
+        return SubscriptionControllerFunctions.updateSubscription(manager, request, id, payload, logger);
+    }
 
 }

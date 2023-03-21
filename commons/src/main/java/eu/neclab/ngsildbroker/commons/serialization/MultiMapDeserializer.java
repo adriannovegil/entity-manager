@@ -14,21 +14,21 @@ import com.google.common.collect.ArrayListMultimap;
 
 public class MultiMapDeserializer extends JsonDeserializer<ArrayListMultimap<String, String>> {
 
-	@Override
-	public ArrayListMultimap<String, String> deserialize(JsonParser p, DeserializationContext ctxt)
-			throws IOException, JacksonException {
-		
-		JsonNode root = p.readValueAsTree();//p.getCodec().readTree(p);
-		Iterator<Entry<String, JsonNode>> it = root.fields();
-		ArrayListMultimap<String, String> result = ArrayListMultimap.create();
-		while (it.hasNext()) {
-			Entry<String, JsonNode> next = it.next();
-			Iterator<JsonNode> it2 = ((ArrayNode) next.getValue()).elements();
-			while (it2.hasNext()) {
-				result.put(next.getKey(), it2.next().asText());
-			}
-		}
-		return result;
-	}
+    @Override
+    public ArrayListMultimap<String, String> deserialize(JsonParser p, DeserializationContext ctxt)
+            throws IOException, JacksonException {
+
+        JsonNode root = p.readValueAsTree();//p.getCodec().readTree(p);
+        Iterator<Entry<String, JsonNode>> it = root.fields();
+        ArrayListMultimap<String, String> result = ArrayListMultimap.create();
+        while (it.hasNext()) {
+            Entry<String, JsonNode> next = it.next();
+            Iterator<JsonNode> it2 = ((ArrayNode) next.getValue()).elements();
+            while (it2.hasNext()) {
+                result.put(next.getKey(), it2.next().asText());
+            }
+        }
+        return result;
+    }
 
 }

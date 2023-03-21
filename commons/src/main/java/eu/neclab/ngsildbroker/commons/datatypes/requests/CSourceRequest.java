@@ -6,36 +6,37 @@ import com.github.jsonldjava.utils.JsonUtils;
 import com.google.common.collect.ArrayListMultimap;
 
 public class CSourceRequest extends BaseRequest {
-	CSourceRequest(ArrayListMultimap<String, String> headers, String id, Map<String, Object> requestPayload,
-			int requestType) {
-		super(headers, id, requestPayload, requestType);
-	}
 
-	public CSourceRequest() {
-	}
+    CSourceRequest(ArrayListMultimap<String, String> headers, String id, Map<String, Object> requestPayload,
+            int requestType) {
+        super(headers, id, requestPayload, requestType);
+    }
 
-	public String getResultCSourceRegistrationString() {
-		if (finalPayload == null) {
-			return null;
-		}
-		try {
-			return JsonUtils.toString(finalPayload);
-		} catch (IOException e) {
-			// should never happen
-			return null;
-		}
-	}
+    public CSourceRequest() {
+    }
 
-	public String getOperationCSourceRegistrationString() {
-		if (requestPayload == null) {
-			return null;
-		}
-		try {
-			return JsonUtils.toString(requestPayload);
-		} catch (IOException e) {
-			// should never happen
-			return null;
-		}
-	}
+    public String getResultCSourceRegistrationString() {
+        if (finalPayload == null) {
+            return null;
+        }
+        try {
+            return JsonUtils.toString(finalPayload);
+        } catch (IOException e) {
+            // should never happen
+            return null;
+        }
+    }
+
+    public String getOperationCSourceRegistrationString() {
+        if (requestPayload == null) {
+            return null;
+        }
+        try {
+            return JsonUtils.toString(requestPayload);
+        } catch (IOException e) {
+            // should never happen
+            return null;
+        }
+    }
 
 }

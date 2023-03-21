@@ -7,9 +7,9 @@ import reactor.netty.http.client.HttpClient;
 
 public abstract interface BeanTools {
 
-	public static WebClient getWebClient() {
-		return WebClient.builder()
-				.clientConnector(new ReactorClientHttpConnector(HttpClient.create().followRedirect(true))).build();
-	}
+    public static WebClient getWebClient() {
+        return WebClient.builder()
+                .clientConnector(new ReactorClientHttpConnector(HttpClient.create().followRedirect(true))).build();
+    }
 
 }

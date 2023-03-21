@@ -9,11 +9,9 @@ import eu.neclab.ngsildbroker.commons.storage.StorageDAO;
 @Repository("qmcsourcedao")
 public class CSourceDAO extends StorageDAO {
 
-	@Override
-	protected StorageFunctionsInterface getStorageFunctions() {
-		return new RegistryStorageFunctions();
-	}
-
-
+    @Override
+    protected StorageFunctionsInterface getStorageFunctions() {
+        return new RegistryStorageFunctions();
+    }
 
 }

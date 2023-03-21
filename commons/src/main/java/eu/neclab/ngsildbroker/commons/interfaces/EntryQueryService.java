@@ -10,7 +10,7 @@ import eu.neclab.ngsildbroker.commons.exceptions.ResponseException;
 
 public interface EntryQueryService {
 
-	public QueryResult getData(QueryParams qp, String rawQueryString, List<Object> linkHeaders,
-			ArrayListMultimap<String, String> headers, Boolean postQuery) throws ResponseException;
+    public QueryResult getData(QueryParams qp, String rawQueryString, List<Object> linkHeaders,
+            ArrayListMultimap<String, String> headers, Boolean postQuery) throws ResponseException;
 
 }

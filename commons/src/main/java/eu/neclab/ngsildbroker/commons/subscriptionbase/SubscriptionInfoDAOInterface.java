@@ -10,13 +10,13 @@ import eu.neclab.ngsildbroker.commons.exceptions.ResponseException;
 
 public interface SubscriptionInfoDAOInterface {
 
-	public Table<String, String, Set<String>> getIds2Type() throws ResponseException;
+    public Table<String, String, Set<String>> getIds2Type() throws ResponseException;
 
-	public List<String> getStoredSubscriptions();
-	
-	public void storeSubscription(SubscriptionRequest sub);
-	
-	public void deleteSubscription(SubscriptionRequest sub);
+    public List<String> getStoredSubscriptions();
 
-	public List<String> getEntriesFromSub(SubscriptionRequest subscriptionRequest) throws ResponseException;
+    public void storeSubscription(SubscriptionRequest sub);
+
+    public void deleteSubscription(SubscriptionRequest sub);
+
+    public List<String> getEntriesFromSub(SubscriptionRequest subscriptionRequest) throws ResponseException;
 }

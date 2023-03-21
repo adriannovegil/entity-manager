@@ -26,34 +26,34 @@ import eu.neclab.ngsildbroker.queryhandler.services.QueryService;
 @RequestMapping("/ngsi-ld/v1/entityOperations")
 public class EntityOperationQueryController {
 
-	@Autowired
-	private QueryService queryService;
+    @Autowired
+    private QueryService queryService;
 
-	@Value("${scorpio.entity.default-limit:50}")
-	private int defaultLimit;
+    @Value("${scorpio.entity.default-limit:50}")
+    private int defaultLimit;
 
-	@Value("${scorpio.entity.batch-operations.query.max-limit:1000}")
-	private int maxLimit;
+    @Value("${scorpio.entity.batch-operations.query.max-limit:1000}")
+    private int maxLimit;
 
-	@Value("${ngsild.corecontext:https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld}")
-	private String coreContext;
+    @Value("${ngsild.corecontext:https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld}")
+    private String coreContext;
 
-	private PayloadQueryParamParser paramParser = new EntityPostQueryParser();
+    private PayloadQueryParamParser paramParser = new EntityPostQueryParser();
 
-	@PostConstruct
-	public void init() {
-		JsonLdProcessor.init(coreContext);
-	}
+    @PostConstruct
+    public void init() {
+        JsonLdProcessor.init(coreContext);
+    }
 
-	@PostMapping("/query")
-	public ResponseEntity<String> postQuery(HttpServletRequest request, @RequestBody String payload,
-			@RequestParam(value = "limit", required = false) Integer limit,
-			@RequestParam(value = "offset", required = false) Integer offset,
-			@RequestParam(value = "qtoken", required = false) String qToken,
-			@RequestParam(name = "options", required = false) List<String> options,
-			@RequestParam(value = "count", required = false, defaultValue = "false") boolean count) {
+    @PostMapping("/query")
+    public ResponseEntity<String> postQuery(HttpServletRequest request, @RequestBody String payload,
+            @RequestParam(value = "limit", required = false) Integer limit,
+            @RequestParam(value = "offset", required = false) Integer offset,
+            @RequestParam(value = "qtoken", required = false) String qToken,
+            @RequestParam(name = "options", required = false) List<String> options,
+            @RequestParam(value = "count", required = false, defaultValue = "false") boolean count) {
 
-		return QueryControllerFunctions.postQuery(queryService, request, payload, limit, offset, qToken, options, count,
-				defaultLimit, maxLimit, AppConstants.QUERY_PAYLOAD, paramParser );
-	}
+        return QueryControllerFunctions.postQuery(queryService, request, payload, limit, offset, qToken, options, count,
+                defaultLimit, maxLimit, AppConstants.QUERY_PAYLOAD, paramParser);
+    }
 }

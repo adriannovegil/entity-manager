@@ -4,10 +4,10 @@ import eu.neclab.ngsildbroker.commons.interfaces.AnnouncementMessage;
 
 public class HandingOfAnnouncement implements AnnouncementMessage {
 
-	@Override
-	public String getId() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public String getId() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

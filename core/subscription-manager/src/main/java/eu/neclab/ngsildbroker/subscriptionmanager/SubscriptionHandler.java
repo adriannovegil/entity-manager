@@ -8,13 +8,12 @@ import eu.neclab.ngsildbroker.commons.securityConfig.WebSecurityConfiguration;
 import eu.neclab.ngsildbroker.commons.tools.MicroServiceUtils;
 
 @SpringBootApplication
-@Import({ WebSecurityConfiguration.class, MicroServiceUtils.class })
+@Import({WebSecurityConfiguration.class, MicroServiceUtils.class})
 public class SubscriptionHandler {
 
-	public static void main(String[] args) {
-		System.setProperty("org.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH", "true");
-		SpringApplication.run(SubscriptionHandler.class, args);
+    public static void main(String[] args) {
+        System.setProperty("org.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH", "true");
+        SpringApplication.run(SubscriptionHandler.class, args);
 
-	}
-
+    }
 }

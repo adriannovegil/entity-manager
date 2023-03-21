@@ -1,5 +1,5 @@
-
 package eu.neclab.ngsildbroker.subscriptionmanager.controller;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -24,119 +24,120 @@ import org.springframework.test.web.servlet.ResultActions;
 import eu.neclab.ngsildbroker.commons.constants.AppConstants;
 import eu.neclab.ngsildbroker.commons.ngsiqueries.ParamsResolver;
 import eu.neclab.ngsildbroker.subscriptionmanager.service.SubscriptionService;
-@SpringBootTest(properties = { "spring.main.allow-bean-definition-overriding=true" })
+
+@SpringBootTest(properties = {"spring.main.allow-bean-definition-overriding=true"})
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc // (secure = false) public class
 public class NotificationControllerTest {
-	private String qPayload;
-	private String ePayload;
 
-	@Autowired
-	private MockMvc mockMvc;
+    private String qPayload;
+    private String ePayload;
 
-	@Mock
-	private ParamsResolver paramResolver;
+    @Autowired
+    private MockMvc mockMvc;
 
-	@MockBean
-	private SubscriptionService ss;
+    @Mock
+    private ParamsResolver paramResolver;
 
-	public static boolean checkEntity = false;
+    @MockBean
+    private SubscriptionService ss;
 
-	@Before
-	public void setup() throws Exception { //@formatter:off
-  
-			qPayload ="{\r\n"
-					+ "        \"id\": \"ngsildbroker:notification:-4670513482090232260\",\r\n"
-					+ "        \"type\": \"Notification\",\r\n"
-					+ "        \"subscriptionId\": \"urn:ngsi-ld:Subscription:storeSubscription\",\r\n"
-					+ "        \"notifiedAt\": \"2022-01-30T21:23:50Z\",\r\n"
-					+ "        \"data\": [ {\r\n"
-					+ "  \"id\" : \"urn:ngsi-ld:test1\",\r\n"
-					+ "  \"type\" : \"Test2\",\r\n"
-					+ "  \"createdAt\" : \"2022-01-30T21:21:29Z\",\r\n"
-					+ "  \"blubdiblub\" : {\r\n"
-					+ "    \"type\" : \"Property\",\r\n"
-					+ "    \"value\" : 200\r\n"
-					+ "  },\r\n"
-					+ "  \"name\" : {\r\n"
-					+ "    \"type\" : \"Property\",\r\n"
-					+ "    \"value\" : \"6-Stars\"\r\n"
-					+ "  },\r\n"
-					+ "  \"speed\" : {\r\n"
-					+ "    \"type\" : \"Property\",\r\n"
-					+ "    \"value\" : 202\r\n"
-					+ "  },\r\n"
-					+ "  \"location\" : {\r\n"
-					+ "    \"type\" : \"GeoProperty\",\r\n"
-					+ "    \"value\" : {\r\n"
-					+ "      \"type\" : \"Point\",\r\n"
-					+ "      \"coordinates\" : [ 100, 100 ]\r\n"
-					+ "    }\r\n"
-					+ "  },\r\n"
-					+ "  \"modifiedAt\" : \"2022-01-30T21:21:29Z\"\r\n"
-					+ "} ]\r\n"
-					+ "}";
-			
-			ePayload ="";
-			  
-			  //@formatter:on 
+    public static boolean checkEntity = false;
 
-	}
+    @Before
+    public void setup() throws Exception { //@formatter:off
 
-	@After
-	public void tearDown() {
-		ePayload = null;
-		qPayload = null;
-	}
-	// setup close
+        qPayload = "{\r\n"
+                + "        \"id\": \"ngsildbroker:notification:-4670513482090232260\",\r\n"
+                + "        \"type\": \"Notification\",\r\n"
+                + "        \"subscriptionId\": \"urn:ngsi-ld:Subscription:storeSubscription\",\r\n"
+                + "        \"notifiedAt\": \"2022-01-30T21:23:50Z\",\r\n"
+                + "        \"data\": [ {\r\n"
+                + "  \"id\" : \"urn:ngsi-ld:test1\",\r\n"
+                + "  \"type\" : \"Test2\",\r\n"
+                + "  \"createdAt\" : \"2022-01-30T21:21:29Z\",\r\n"
+                + "  \"blubdiblub\" : {\r\n"
+                + "    \"type\" : \"Property\",\r\n"
+                + "    \"value\" : 200\r\n"
+                + "  },\r\n"
+                + "  \"name\" : {\r\n"
+                + "    \"type\" : \"Property\",\r\n"
+                + "    \"value\" : \"6-Stars\"\r\n"
+                + "  },\r\n"
+                + "  \"speed\" : {\r\n"
+                + "    \"type\" : \"Property\",\r\n"
+                + "    \"value\" : 202\r\n"
+                + "  },\r\n"
+                + "  \"location\" : {\r\n"
+                + "    \"type\" : \"GeoProperty\",\r\n"
+                + "    \"value\" : {\r\n"
+                + "      \"type\" : \"Point\",\r\n"
+                + "      \"coordinates\" : [ 100, 100 ]\r\n"
+                + "    }\r\n"
+                + "  },\r\n"
+                + "  \"modifiedAt\" : \"2022-01-30T21:21:29Z\"\r\n"
+                + "} ]\r\n"
+                + "}";
 
-	/**
-	 * this method is use for notify the subscription
-	 */
-	@Test
-	public void notifyTest() {
-		try {
-			SubscriptionService subscriptionService = new SubscriptionService();
-			SubscriptionService spy = Mockito.spy(subscriptionService);
-			Mockito.doNothing().when(spy).remoteNotify(any(), any());
-			ResultActions resultAction = mockMvc.perform(
-					post("/remotenotify/{id}", "-4670513482090232260").contentType(AppConstants.NGB_APPLICATION_JSON)
-							.accept(AppConstants.NGB_APPLICATION_JSONLD).content(qPayload))
-					.andExpect(status().isOk());
-			MvcResult mvcResult = resultAction.andReturn();
-			MockHttpServletResponse response = mvcResult.getResponse();
-			int status = response.getStatus();
-			Assert.assertEquals(200, status);
-			verify(ss, times(1)).remoteNotify(any(), any());
+        ePayload = "";
 
-		} catch (Exception e) {
-			Assert.fail();
-			e.printStackTrace();
-		}
-	}
+        //@formatter:on 
+    }
 
-	/**
-	 * this method is use for validate the BadRequest Data
-	 */
-	@Test
-	public void notifyBadRequestTest() {
-		try {
-			SubscriptionService subscriptionService = new SubscriptionService();
-			SubscriptionService spy = Mockito.spy(subscriptionService);
-			Mockito.doNothing().when(spy).remoteNotify(any(), any());
-			ResultActions resultAction = mockMvc.perform(
-					post("/remotenotify/{id}", "-4670513482090232260").contentType(AppConstants.NGB_APPLICATION_JSON)
-							.accept(AppConstants.NGB_APPLICATION_JSONLD).content(ePayload))
-					.andExpect(status().isBadRequest());
-			MvcResult mvcResult = resultAction.andReturn();
-			MockHttpServletResponse response = mvcResult.getResponse();
-			int status = response.getStatus();
-			Assert.assertEquals(400, status);
-			verify(ss, times(0)).remoteNotify(any(), any());
-		} catch (Exception e) {
-			Assert.fail();
-			e.printStackTrace();
-		}
-	}
+    @After
+    public void tearDown() {
+        ePayload = null;
+        qPayload = null;
+    }
+    // setup close
+
+    /**
+     * this method is use for notify the subscription
+     */
+    @Test
+    public void notifyTest() {
+        try {
+            SubscriptionService subscriptionService = new SubscriptionService();
+            SubscriptionService spy = Mockito.spy(subscriptionService);
+            Mockito.doNothing().when(spy).remoteNotify(any(), any());
+            ResultActions resultAction = mockMvc.perform(
+                    post("/remotenotify/{id}", "-4670513482090232260").contentType(AppConstants.NGB_APPLICATION_JSON)
+                            .accept(AppConstants.NGB_APPLICATION_JSONLD).content(qPayload))
+                    .andExpect(status().isOk());
+            MvcResult mvcResult = resultAction.andReturn();
+            MockHttpServletResponse response = mvcResult.getResponse();
+            int status = response.getStatus();
+            Assert.assertEquals(200, status);
+            verify(ss, times(1)).remoteNotify(any(), any());
+
+        } catch (Exception e) {
+            Assert.fail();
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * this method is use for validate the BadRequest Data
+     */
+    @Test
+    public void notifyBadRequestTest() {
+        try {
+            SubscriptionService subscriptionService = new SubscriptionService();
+            SubscriptionService spy = Mockito.spy(subscriptionService);
+            Mockito.doNothing().when(spy).remoteNotify(any(), any());
+            ResultActions resultAction = mockMvc.perform(
+                    post("/remotenotify/{id}", "-4670513482090232260").contentType(AppConstants.NGB_APPLICATION_JSON)
+                            .accept(AppConstants.NGB_APPLICATION_JSONLD).content(ePayload))
+                    .andExpect(status().isBadRequest());
+            MvcResult mvcResult = resultAction.andReturn();
+            MockHttpServletResponse response = mvcResult.getResponse();
+            int status = response.getStatus();
+            Assert.assertEquals(400, status);
+            verify(ss, times(0)).remoteNotify(any(), any());
+        } catch (Exception e) {
+            Assert.fail();
+            e.printStackTrace();
+        }
+    }
 
 }

@@ -6,117 +6,118 @@ import java.util.UUID;
 import eu.neclab.ngsildbroker.commons.constants.NGSIConstants;
 
 abstract class BaseEntry {
-	private String name;
-	private Long observedAt = -1l;
-	private List<Property> properties;
-	private Object refToAccessControl;
-	private List<Relationship> relationships;
-	private int timeSeriesId;
-	protected String type;
-	private Long createdAt = -1l;
-	private Long modifiedAt = -1l;
-	private String dataSetId;
 
-	BaseEntry(String dataSetId) {
-		this.dataSetId = dataSetId;
-		if (this.dataSetId == null || this.dataSetId.trim().isEmpty()) {
-			this.dataSetId = NGSIConstants.DEFAULT_DATA_SET_ID;
-		}
-	}
+    private String name;
+    private Long observedAt = -1l;
+    private List<Property> properties;
+    private Object refToAccessControl;
+    private List<Relationship> relationships;
+    private int timeSeriesId;
+    protected String type;
+    private Long createdAt = -1l;
+    private Long modifiedAt = -1l;
+    private String dataSetId;
 
-	public String getDataSetId() {
-		return dataSetId;
-	}
+    BaseEntry(String dataSetId) {
+        this.dataSetId = dataSetId;
+        if (this.dataSetId == null || this.dataSetId.trim().isEmpty()) {
+            this.dataSetId = NGSIConstants.DEFAULT_DATA_SET_ID;
+        }
+    }
 
-	public void setDataSetId(String dataSetId) {
-		this.dataSetId = dataSetId;
-		if (this.dataSetId == null || this.dataSetId.trim().isEmpty()) {
-			this.dataSetId = UUID.randomUUID().toString();
-		}
-	}
+    public String getDataSetId() {
+        return dataSetId;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setDataSetId(String dataSetId) {
+        this.dataSetId = dataSetId;
+        if (this.dataSetId == null || this.dataSetId.trim().isEmpty()) {
+            this.dataSetId = UUID.randomUUID().toString();
+        }
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public long getObservedAt() {
-		return observedAt;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setObservedAt(Long observedAt) {
-		if (observedAt == null) {
-			this.observedAt = -1l;
-		} else {
-			this.observedAt = observedAt;
-		}
-	}
+    public long getObservedAt() {
+        return observedAt;
+    }
 
-	public List<Property> getProperties() {
-		return properties;
-	}
+    public void setObservedAt(Long observedAt) {
+        if (observedAt == null) {
+            this.observedAt = -1l;
+        } else {
+            this.observedAt = observedAt;
+        }
+    }
 
-	public void setProperties(List<Property> properties) {
-		this.properties = properties;
-	}
+    public List<Property> getProperties() {
+        return properties;
+    }
 
-	public Object getRefToAccessControl() {
-		return refToAccessControl;
-	}
+    public void setProperties(List<Property> properties) {
+        this.properties = properties;
+    }
 
-	public void setRefToAccessControl(Object refToAccessControl) {
-		this.refToAccessControl = refToAccessControl;
-	}
+    public Object getRefToAccessControl() {
+        return refToAccessControl;
+    }
 
-	public List<Relationship> getRelationships() {
-		return relationships;
-	}
+    public void setRefToAccessControl(Object refToAccessControl) {
+        this.refToAccessControl = refToAccessControl;
+    }
 
-	public void setRelationships(List<Relationship> relationships) {
-		this.relationships = relationships;
-	}
+    public List<Relationship> getRelationships() {
+        return relationships;
+    }
 
-	public int getTimeSeriesId() {
-		return timeSeriesId;
-	}
+    public void setRelationships(List<Relationship> relationships) {
+        this.relationships = relationships;
+    }
 
-	public void setTimeSeriesId(int timeSeriesId) {
-		this.timeSeriesId = timeSeriesId;
-	}
+    public int getTimeSeriesId() {
+        return timeSeriesId;
+    }
 
-	public String getType() {
-		return type;
-	}
+    public void setTimeSeriesId(int timeSeriesId) {
+        this.timeSeriesId = timeSeriesId;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public long getCreatedAt() {
-		return createdAt;
-	}
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	public void setCreatedAt(Long createdAt) {
-		if (createdAt == null) {
-			this.createdAt = -1l;
-		} else {
-			this.createdAt = createdAt;
-		}
-	}
+    public long getCreatedAt() {
+        return createdAt;
+    }
 
-	public long getModifiedAt() {
-		return modifiedAt;
-	}
+    public void setCreatedAt(Long createdAt) {
+        if (createdAt == null) {
+            this.createdAt = -1l;
+        } else {
+            this.createdAt = createdAt;
+        }
+    }
 
-	public void setModifiedAt(Long modifiedAt) {
-		if (modifiedAt == null) {
-			this.modifiedAt = -1l;
-		} else {
-			this.modifiedAt = modifiedAt;
-		}
-	}
+    public long getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public void setModifiedAt(Long modifiedAt) {
+        if (modifiedAt == null) {
+            this.modifiedAt = -1l;
+        } else {
+            this.modifiedAt = modifiedAt;
+        }
+    }
 
 }

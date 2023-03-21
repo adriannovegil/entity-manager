@@ -5,21 +5,22 @@ import com.github.filosganga.geogson.model.Geometry;
 import eu.neclab.ngsildbroker.commons.constants.NGSIConstants;
 
 public class GeoPropertyEntry extends BaseEntry {
-	private Geometry<?> geoValue;
 
-	public GeoPropertyEntry(String dataSetId, Geometry<?> geoValue) {
-		super(dataSetId);
+    private Geometry<?> geoValue;
 
-		this.geoValue = geoValue;
-		this.type = NGSIConstants.NGSI_LD_GEOPROPERTY;
-	}
+    public GeoPropertyEntry(String dataSetId, Geometry<?> geoValue) {
+        super(dataSetId);
 
-	public Geometry<?> getGeoValue() {
-		return geoValue;
-	}
+        this.geoValue = geoValue;
+        this.type = NGSIConstants.NGSI_LD_GEOPROPERTY;
+    }
 
-	public void setGeoValue(Geometry<?> geoValue) {
-		this.geoValue = geoValue;
-	}
+    public Geometry<?> getGeoValue() {
+        return geoValue;
+    }
+
+    public void setGeoValue(Geometry<?> geoValue) {
+        this.geoValue = geoValue;
+    }
 
 }

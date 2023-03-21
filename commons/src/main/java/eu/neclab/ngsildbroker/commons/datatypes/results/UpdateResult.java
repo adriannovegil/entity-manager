@@ -45,47 +45,48 @@ public class UpdateResult {
 //	    ]
 //	  }
 //	]
-	private List<Map<String, Object>> updated = new ArrayList<Map<String, Object>>();
-	private List<Map<String, Object>> notUpdated = new ArrayList<Map<String, Object>>();
 
-	public void addToUpdated(String updatedAttrId) {
-		HashMap<String, Object> tmp = new HashMap<String, Object>();
-		tmp.put(NGSIConstants.JSON_LD_VALUE, updatedAttrId);
-		updated.add(tmp);
-	}
+    private List<Map<String, Object>> updated = new ArrayList<Map<String, Object>>();
+    private List<Map<String, Object>> notUpdated = new ArrayList<Map<String, Object>>();
 
-	public void addToNotUpdated(String notUpdatedAttrId, String reason) {
-		HashMap<String, Object> notUpdatedEntry = new HashMap<String, Object>();
-		HashMap<String, Object> tmp = new HashMap<String, Object>();
-		List<Map<String, Object>> tmp2 = new ArrayList<Map<String, Object>>();
-		tmp.put(NGSIConstants.JSON_LD_ID, notUpdatedAttrId);
-		tmp2.add(tmp);
-		notUpdatedEntry.put(NGSIConstants.NGSI_LD_ATTRIBUTE_NAME, tmp2);
-		tmp = new HashMap<String, Object>();
-		tmp2 = new ArrayList<Map<String, Object>>();
-		tmp.put(NGSIConstants.JSON_LD_VALUE, reason);
-		tmp2.add(tmp);
-		notUpdatedEntry.put(NGSIConstants.NGSI_LD_REASON, tmp2);
-		notUpdated.add(notUpdatedEntry);
-	}
+    public void addToUpdated(String updatedAttrId) {
+        HashMap<String, Object> tmp = new HashMap<String, Object>();
+        tmp.put(NGSIConstants.JSON_LD_VALUE, updatedAttrId);
+        updated.add(tmp);
+    }
 
-	public List<Map<String, Object>> getUpdated() {
-		return updated;
-	}
+    public void addToNotUpdated(String notUpdatedAttrId, String reason) {
+        HashMap<String, Object> notUpdatedEntry = new HashMap<String, Object>();
+        HashMap<String, Object> tmp = new HashMap<String, Object>();
+        List<Map<String, Object>> tmp2 = new ArrayList<Map<String, Object>>();
+        tmp.put(NGSIConstants.JSON_LD_ID, notUpdatedAttrId);
+        tmp2.add(tmp);
+        notUpdatedEntry.put(NGSIConstants.NGSI_LD_ATTRIBUTE_NAME, tmp2);
+        tmp = new HashMap<String, Object>();
+        tmp2 = new ArrayList<Map<String, Object>>();
+        tmp.put(NGSIConstants.JSON_LD_VALUE, reason);
+        tmp2.add(tmp);
+        notUpdatedEntry.put(NGSIConstants.NGSI_LD_REASON, tmp2);
+        notUpdated.add(notUpdatedEntry);
+    }
 
-	public List<Map<String, Object>> getNotUpdated() {
-		return notUpdated;
-	}
+    public List<Map<String, Object>> getUpdated() {
+        return updated;
+    }
 
-	public Map<String, Object> toJsonMap() {
-		HashMap<String, Object> result = new HashMap<String, Object>();
-		if (!updated.isEmpty()) {
-			result.put(NGSIConstants.NGSI_LD_UPDATED, updated);
-		}
-		if (!notUpdated.isEmpty()) {
-			result.put(NGSIConstants.NGSI_LD_NOT_UPDATED, notUpdated);
-		}
-		return result;
-	}
+    public List<Map<String, Object>> getNotUpdated() {
+        return notUpdated;
+    }
+
+    public Map<String, Object> toJsonMap() {
+        HashMap<String, Object> result = new HashMap<String, Object>();
+        if (!updated.isEmpty()) {
+            result.put(NGSIConstants.NGSI_LD_UPDATED, updated);
+        }
+        if (!notUpdated.isEmpty()) {
+            result.put(NGSIConstants.NGSI_LD_NOT_UPDATED, notUpdated);
+        }
+        return result;
+    }
 
 }

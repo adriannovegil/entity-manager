@@ -28,32 +28,32 @@ import eu.neclab.ngsildbroker.subscriptionmanager.service.SubscriptionService;
 @RequestMapping("/remotenotify")
 public class NotificationController {
 
-	@Value("${ngsild.corecontext:https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld}")
-	String coreContext;
+    @Value("${ngsild.corecontext:https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld}")
+    String coreContext;
 
-	@PostConstruct
-	public void init() {
-		JsonLdProcessor.init(coreContext);
-	}
+    @PostConstruct
+    public void init() {
+        JsonLdProcessor.init(coreContext);
+    }
 
-	@Autowired
-	SubscriptionService subscriptionManager;
-	private JsonLdOptions opts = new JsonLdOptions(JsonLdOptions.JSON_LD_1_1);
+    @Autowired
+    SubscriptionService subscriptionManager;
+    private JsonLdOptions opts = new JsonLdOptions(JsonLdOptions.JSON_LD_1_1);
 
-	@RequestMapping(method = RequestMethod.POST, value = "/{id}")
-	public ResponseEntity<String> notify(HttpServletRequest req, @RequestBody String payload,
-			@PathVariable(name = NGSIConstants.QUERY_PARAMETER_ID, required = false) String id) {
-		try {
-			List<Object> atContextLinks = HttpUtils.getAtContext(req);
-			subscriptionManager.remoteNotify(id,
-					(Map<String, Object>) JsonLdProcessor.expand(atContextLinks, JsonUtils.fromString(payload), opts,
-							AppConstants.NOTIFICAITION_RECEIVED, HttpUtils.doPreflightCheck(req, atContextLinks))
-							.get(0));
-		} catch (Exception e) {
-			return HttpUtils.handleControllerExceptions(e);
-		}
-		return ResponseEntity.ok().build();
+    @RequestMapping(method = RequestMethod.POST, value = "/{id}")
+    public ResponseEntity<String> notify(HttpServletRequest req, @RequestBody String payload,
+            @PathVariable(name = NGSIConstants.QUERY_PARAMETER_ID, required = false) String id) {
+        try {
+            List<Object> atContextLinks = HttpUtils.getAtContext(req);
+            subscriptionManager.remoteNotify(id,
+                    (Map<String, Object>) JsonLdProcessor.expand(atContextLinks, JsonUtils.fromString(payload), opts,
+                            AppConstants.NOTIFICAITION_RECEIVED, HttpUtils.doPreflightCheck(req, atContextLinks))
+                            .get(0));
+        } catch (Exception e) {
+            return HttpUtils.handleControllerExceptions(e);
+        }
+        return ResponseEntity.ok().build();
 
-	}
+    }
 
 }
